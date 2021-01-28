@@ -12,27 +12,36 @@
 		<meta name="author" content="">
 
 		<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+		<link rel="stylesheet" href="/static/base.css">
 	</head>
 
 	<body class="bg-grey-lightest font-serif leading-normal tracking-normal">
 
 	<header>
-		<h1>
-		{% block header %}
-		{% endblock %}
-		</h1>
-	</header>
-		<div id="content">
-			{% block content %}{% endblock %}
+		<div class="max-w-screen-lg bg-blue-500 shadow-2xl rounded-lg mx-auto text-center py-12 mt-4">
+			<h1 class="text-3xl leading-9 font-bold tracking-tight text-white sm:text-4xl sm:leading-10">
+			{% block header %}
+			{% endblock %}
+			</h1>
 		</div>
-	<div class="grid justify-items-center items-center">
-        <form method="POST" action="{% block form_action %}{% endblock %}">
-            <input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
-            {% csrf_token %}
-        </form>
+		<div class="mt-8 flex justify-center">
+		<div class="inline-flex rounded-md bg-white shadow">
+			<form method="POST" action="{% block form_action %}{% endblock %}">
+				<input class="border py-2 px-3 text-grey-darkest"
+					   name="item_text" id="id_new_item" placeholder="Enter a to-do item"
+					   type="text">
+				{% csrf_token %}
+			</form>
+		</div>
     </div>
+	</header>
+	<div id="content">
+		{% block content %}{% endblock %}
+	</div>
+	<div class="mt-8 flex justify-center">
 	{% block table %}
 	{% endblock %}
+	</div>
 
 	</body>
 
