@@ -11,7 +11,7 @@ class NewItemTest(TestCase):
 
         self.client.post(
             f'/lists/{correct_list.id}/',
-            data={'item_text': 'A new item for an existing list'}
+            data={'text': 'A new item for an existing list'}
         )
 
         self.assertEqual(Item.objects.count(), 1)
@@ -25,7 +25,7 @@ class NewItemTest(TestCase):
 
         response = self.client.post(
             f'/lists/{correct_list.id}/add_item',
-            data={'item_text': 'A new item for an existing list'}
+            data={'text': 'A new item for an existing list'}
         )
 
         self.assertRedirects(response, f'/lists/{correct_list.id}/')
@@ -82,7 +82,7 @@ class NewListTest(TestCase):
 
         self.client.post(
             f'/lists/{correct_list.id}/',
-            data={'item_text': 'A new list item for an existing list'}
+            data={'text': 'A new list item for an existing list'}
         )
 
         self.assertEqual(Item.objects.count(), 1)
@@ -95,14 +95,14 @@ class NewListTest(TestCase):
         correct_list = List.objects.create()
         response = self.client.post(
             f'/lists/{correct_list.id}/',
-            data={'item_text': 'A new list item'}
+            data={'text': 'A new list item'}
         )
         self.assertRedirects(response, f'/lists/{correct_list.id}/')
 
     def test_validation_errors_are_sent_back_to_home_page_template(self):
         response = self.client.post(
             '/lists/new',
-            data={'item_text': ''}
+            data={'text': ''}
         )
         self.assertEqual(List.objects.count(), 0)
         self.assertEqual(Item.objects.count(), 0)
@@ -115,7 +115,7 @@ class NewListTest(TestCase):
         list_ = List.objects.create()
         response = self.client.post(
             f'/lists/{list_.id}/',
-            data={'item_text': ''}
+            data={'text': ''}
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'list.html')
