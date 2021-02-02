@@ -27,9 +27,7 @@
 		<div class="mt-8 flex justify-center">
 		<div class="inline-flex bg-white shadow">
 			<form method="POST" action="{% block form_action %}{% endblock %}">
-				<input class="border py-2 px-3 text-grey-darkest"
-					   name="item_text" id="id_new_item" placeholder="Enter a to-do item"
-					   type="text">
+				{{ form.text }}
 				{% csrf_token %}
 				{% if error %}
 					<div class="has-error border-red-500">
