@@ -34,4 +34,4 @@ def new_list(request):
         list_.delete()
         expected_error = "You can't have an empty list item"
         return render(request, 'home.html', {"error": expected_error})
-    return redirect(f'/lists/{list_.id}/')
+    return redirect(list_)
