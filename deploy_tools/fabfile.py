@@ -48,4 +48,4 @@ def _update_database():
     run('./virtualenv/bin/python manage.py migrate --noinput')
 
 def _restart_gunicorn():
-    run('sudo systemctl restart gunicorn-staging.harakka.jp')
+    run(f'sudo systemctl restart gunicorn-{env.host}')
