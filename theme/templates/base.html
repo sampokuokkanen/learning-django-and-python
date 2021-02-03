@@ -29,9 +29,9 @@
 			<form method="POST" action="{% block form_action %}{% endblock %}">
 				{{ form.text }}
 				{% csrf_token %}
-				{% if error %}
+				{% if form.errors %}
 					<div class="has-error border-red-500">
-						{{error}}
+						{{ form.text.errors }}
 					</div>
 				{% endif %}
 			</form>
