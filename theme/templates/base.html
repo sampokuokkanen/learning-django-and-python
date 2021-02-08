@@ -13,6 +13,7 @@
 
 		<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 		<link rel="stylesheet" href="/static/base.css">
+		<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 	</head>
 
 	<body class="bg-grey-lightest font-serif leading-normal tracking-normal">
@@ -25,15 +26,14 @@
 			</h1>
 		</div>
 		<div class="mt-8 flex justify-center">
-		<div class="inline-flex bg-white shadow">
+		<div class="inline-flex bg-white shadow"
+			 x-data="{ isShowing: {{ form.errors|yesno:"true,false" }} }">
 			<form method="POST" action="{% block form_action %}{% endblock %}">
 				{{ form.text }}
 				{% csrf_token %}
-				{% if form.errors %}
-					<div class="has-error border-red-500">
-						{{ form.text.errors }}
-					</div>
-				{% endif %}
+				<div x-show="isShowing" class="has-error border-red-500">
+					{{ form.text.errors }}
+				</div>
 			</form>
 		</div>
     </div>

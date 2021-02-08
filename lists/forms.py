@@ -14,6 +14,7 @@ class ItemForm(forms.models.ModelForm):
             'text': forms.fields.TextInput(attrs={
             'placeholder': 'Enter a to-do item',
             'class': 'border py-2 px-3 text-grey-darkest',
+            'x-on:keydown': 'isShowing = false',
             })
         }
         error_messages = {
