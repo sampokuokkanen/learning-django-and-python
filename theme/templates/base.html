@@ -17,7 +17,17 @@
 	</head>
 
 	<body class="bg-grey-lightest font-serif leading-normal tracking-normal">
-
+<div class="container">
+	{% if user.is_authenticated %}
+	<p>Logged in as {% user.email %}</p>
+	<p><a id="id_logout" href="{% url 'logout' %}">Log out</a></p>
+	{% else %}
+	<form method="POST" action="{% url 'send_login_email' %}">
+		Enter email to log in: <input name="email" type="text" />
+		{% csrf_token %}
+	</form>
+	{% endif %}
+</div>
 	<header>
 		<div class="max-w-screen-lg bg-blue-500 shadow-2xl rounded-lg mx-auto text-center py-12 mt-4">
 			<h1 class="text-3xl leading-9 font-bold tracking-tight text-white sm:text-4xl sm:leading-10">
