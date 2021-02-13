@@ -12,7 +12,7 @@ class HomePage(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ItemForm()
-        context['count'] = 1
+        context['count'] = self.request.session.get('count', 1)
         return context
 
 

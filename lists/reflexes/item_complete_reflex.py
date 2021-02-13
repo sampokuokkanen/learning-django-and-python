@@ -1,6 +1,5 @@
-from sockpuppet.reflex import Reflex
+from sockpuppet import reflex
 
-
-class ItemCompleteReflex(Reflex):
+class ItemCompleteReflex(reflex.Reflex):
     def increment(self, step=1):
-        self.count = int(self.element.dataset['count']) + step
+        self.session['count'] = self.session.get('count', 1) + step
