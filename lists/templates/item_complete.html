@@ -1,0 +1,11 @@
+
+{% load static %}
+
+
+    <script src="{% static 'sockpuppet/sockpuppet.js' %}"></script>
+    <a
+      href="#"
+      data-reflex="click->Item_CompleteReflex#increment"
+      data-reflex-root="[increment]"
+      data-count="{{ count }}"
+    >Increment </a><span increment>{{ count }}</span>

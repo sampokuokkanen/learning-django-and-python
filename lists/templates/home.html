@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
-{% block header %}Start a new To-Do list{% endblock %}
+{% block header %}
+Counter:
+{% include 'item_complete.html' %}
+Start a new To-Do list{% endblock %}
 
 {% block form_action %}{% url 'new_list' %}{% endblock %}

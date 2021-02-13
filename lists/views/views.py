@@ -2,11 +2,18 @@ from django.shortcuts import redirect, render
 from django.core.exceptions import ValidationError
 from lists.models import Item, List
 from lists.forms import ItemForm, ExistingListItemForm
-
+from django.views.generic.base import TemplateView
 
 # Create your views here.
-def home_page(request):
-    return render(request, 'home.html', {'form': ItemForm()})
+class HomePage(TemplateView):
+
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ItemForm()
+        context['count'] = 1
+        return context
 
 
 def view_list(request, list_id):
