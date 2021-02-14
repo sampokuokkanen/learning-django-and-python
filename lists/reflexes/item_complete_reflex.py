@@ -1,5 +1,9 @@
-from sockpuppet import reflex
+from sockpuppet.reflex import Reflex
+from lists.models import Item
 
-class ItemCompleteReflex(reflex.Reflex):
-    def increment(self, step=1):
-        self.session['count'] = self.session.get('count', 1) + step
+
+class ItemCompleteReflex(Reflex):
+    def complete(self):
+        item = Item.objects.get(pk=self.element.dataset['item_id'])
+        item.completed = self.element.dataset['completed'] == 'False'
+        item.save()

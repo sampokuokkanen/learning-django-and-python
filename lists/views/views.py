@@ -1,18 +1,30 @@
 from django.shortcuts import redirect, render
-from django.core.exceptions import ValidationError
 from lists.models import Item, List
 from lists.forms import ItemForm, ExistingListItemForm
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
 # Create your views here.
 class HomePage(TemplateView):
-
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ItemForm()
         context['count'] = self.request.session.get('count', 1)
+        return context
+
+
+class ShowListView(TemplateView):
+    template_name = 'lists/list_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        breakpoint()
+        list_ = List.objects.get(pk=self.request.get_full_path().split("/")[-2])
+        context['list'] = list_
+        context['form'] = ExistingListItemForm(for_list=list_)
         return context
 
 
@@ -24,7 +36,7 @@ def view_list(request, list_id):
         if form.is_valid():
             form.save()
             return redirect(list_)
-    return render(request, 'list.html', {
+    return render(request, 'list_detail.html', {
         'list': list_, 'form': form
     })
 

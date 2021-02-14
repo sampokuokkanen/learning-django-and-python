@@ -13,6 +13,13 @@ class ListModelTest(TestCase):
 
 class ItemsModelTest(TestCase):
 
+    def test_completed_field(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(list=list_, text='bla')
+        self.assertFalse(item.completed)
+        item.completed = True
+        self.assertTrue(item.completed)
+
     def test_default_text(self):
         item = Item()
         self.assertEqual(item.text, '')
