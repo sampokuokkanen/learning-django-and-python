@@ -2,6 +2,8 @@ import random
 from fabric.contrib.files import append, exists
 from fabric.api import cd, env, local, run
 
+SENDGRID_API_KEY = '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'
+
 REPO_URL = 'git@github.com:sampokuokkanen/learning-django-and-python.git'
 
 def deploy():
@@ -31,6 +33,7 @@ def _update_virtualenv():
 def _create_or_update_dotenv():
     append('.env', 'DJANGO_DEBUG_FALSE=y')
     append('.env', f'SITENAME={env.host}')
+    append('.env', f'SENDGRID_API_KEY={SENDGRID_API_KEY}')
     current_contents = run('cat .env')
     if 'DJANGO_SECRET_KEY' not in current_contents:
         new_secret = ''.join(random.SystemRandom().choices(

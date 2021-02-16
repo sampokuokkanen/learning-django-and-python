@@ -1,0 +1,20 @@
+
+{% load static %}
+<body>
+
+
+    <script src="{% static 'sockpuppet/sockpuppet.js' %}"></script>
+    <a
+      href="#"
+      data-reflex="click->DeleteListReflex#delete"
+      data-count="{{ count }}"
+    >Increment </a><span>{{ count }}</span>
+    {% for list_ in object_list %}
+    <tr>
+        <td
+        data-reflex="click->DeleteListReflex#delete"
+        data-item_id="{{ item.id }}"
+        >{{ forloop.counter }}: {{ list_.item_set.count }}</td>
+    </tr>
+    {% endfor %}
+</body>

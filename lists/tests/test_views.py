@@ -117,9 +117,6 @@ class HomePageTest(TestCase):
 
 
 class NewListTest(TestCase):
-    def setUp(self):
-        # Every test needs a client.
-        self.client = Client()
 
     def test_can_save_a_POST_request_to_an_existing_list(self):
         other_list = List.objects.create()

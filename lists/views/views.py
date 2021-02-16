@@ -16,16 +16,16 @@ class HomePage(TemplateView):
         return context
 
 
-class ShowListView(TemplateView):
-    template_name = 'lists/list_detail.html'
+class ShowDetailView(DetailView):
+    model = List
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        breakpoint()
-        list_ = List.objects.get(pk=self.request.get_full_path().split("/")[-2])
-        context['list'] = list_
-        context['form'] = ExistingListItemForm(for_list=list_)
+        context['form'] = ExistingListItemForm(for_list=self.object)
         return context
+
+class ShowListView(ListView):
+    model = List
 
 
 def view_list(request, list_id):
