@@ -13,7 +13,7 @@ class NewItemTest(TestCase):
         correct_list = List.objects.create()
 
         self.client.post(
-            f'/lists/{correct_list.id}/',
+            f'/lists/{correct_list.id}/new_item',
             data={'text': 'A new item for an existing list'}
         )
 
@@ -27,7 +27,7 @@ class NewItemTest(TestCase):
         correct_list = List.objects.create()
 
         response = self.client.post(
-            f'/lists/{correct_list.id}/add_item',
+            f'/lists/{correct_list.id}/new_item',
             data={'text': 'A new item for an existing list'}
         )
 
@@ -45,7 +45,7 @@ class ListViewTest(TestCase):
     def test_user_list_template(self):
         list_ = List.objects.create()
         response = self.client.get(f'/lists/{list_.id}/')
-        self.assertTemplateUsed(response, 'list_detail.html')
+        self.assertTemplateUsed(response, 'lists/list_detail.html')
 
     def test_displays_all_items(self):
         correct_list = List.objects.create()
@@ -72,7 +72,7 @@ class ListViewTest(TestCase):
     def post_invalid_input(self):
         list_ = List.objects.create()
         return self.client.post(
-            f'/lists/{list_.id}/',
+            f'/lists/{list_.id}/new_item',
             data={'text': ''}
         )
 
@@ -106,7 +106,7 @@ class HomePageTest(TestCase):
         list1 = List.objects.create()
         item1 = Item.objects.create(list=list1, text='textey')
         response = self.client.post(
-            f'/lists/{list1.id}/',
+            f'/lists/{list1.id}/new_item',
             data={'text': 'textey'}
         )
 
@@ -136,7 +136,7 @@ class NewListTest(TestCase):
         other_list = List.objects.create()
         correct_list = List.objects.create()
         response = self.client.post(
-            f'/lists/{correct_list.id}/',
+            f'/lists/{correct_list.id}/new_item',
             data={'text': 'A new list item'}
         )
         self.assertRedirects(response, f'/lists/{correct_list.id}/')

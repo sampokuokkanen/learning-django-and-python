@@ -6,7 +6,7 @@ class List(models.Model):
     pass
 
     def get_absolute_url(self):
-        return reverse('list_detail', args=[self.id])
+        return reverse('list_detail', kwargs={'pk': self.pk})
 
 
 class Item(models.Model):

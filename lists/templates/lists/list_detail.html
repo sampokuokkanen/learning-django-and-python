@@ -2,7 +2,7 @@
 
 {% block header %} Your To-Do list {% endblock %}
 
-{% block form_action %}{% url 'list_detail' list.id %}{% endblock %}
+{% block form_action %}{% url 'create_item' list.id %}{% endblock %}
 
 {% block table %}
 {% include 'item_complete.html' %}

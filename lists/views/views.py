@@ -4,6 +4,8 @@ from lists.forms import ItemForm, ExistingListItemForm
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 
 # Create your views here.
 class HomePage(TemplateView):
@@ -18,25 +20,21 @@ class HomePage(TemplateView):
 
 class ShowDetailView(DetailView):
     model = List
+    template_name = 'lists/list_detail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ExistingListItemForm(for_list=self.object)
         return context
 
-class ShowListView(ListView):
-    model = List
 
-
-def view_list(request, list_id):
-    list_ = List.objects.get(id=list_id)
-    form = ExistingListItemForm(for_list=list_)
-    if request.method == 'POST':
-        form = ExistingListItemForm(for_list=list_, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(list_)
-    return render(request, 'list_detail.html', {
+def create_item(request, *args, **kwargs):
+    list_ = List.objects.get(pk=kwargs['pk'])
+    form = ExistingListItemForm(for_list=list_, data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect(list_)
+    return render(request, 'lists/list_detail.html', {
         'list': list_, 'form': form
     })
 
