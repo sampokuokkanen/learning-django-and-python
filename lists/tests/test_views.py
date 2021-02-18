@@ -83,7 +83,7 @@ class ListViewTest(TestCase):
     def test_for_invalid_input_renders_list_template(self):
         response = self.post_invalid_input()
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'list_detail.html')
+        self.assertTemplateUsed(response, 'lists/list_detail.html')
 
     def test_for_invalid_input_passes_form_to_template(self):
         response = self.post_invalid_input()
@@ -112,7 +112,7 @@ class HomePageTest(TestCase):
 
         expected_error = escape(DUPLICATE_ITEM_ERROR)
         self.assertContains(response, expected_error)
-        self.assertTemplateUsed(response, 'list_detail.html')
+        self.assertTemplateUsed(response, 'lists/list_detail.html')
         self.assertEqual(Item.objects.all().count(), 1)
 
 
@@ -123,7 +123,7 @@ class NewListTest(TestCase):
         correct_list = List.objects.create()
 
         self.client.post(
-            f'/lists/{correct_list.id}/',
+            f'/lists/{correct_list.id}/new_item',
             data={'text': 'A new list item for an existing list'}
         )
 
