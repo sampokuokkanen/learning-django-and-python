@@ -10,6 +10,7 @@
     {% for item in list.item_set.all %}
     <tr class="{{ item.completed|yesno:"line-through, underline" }}">
         <td
+        id="item-{{ forloop.counter }}"
         data-reflex="click->ItemCompleteReflex#complete"
         data-completed="{{ item.completed }}"
         data-item_id="{{ item.id }}"

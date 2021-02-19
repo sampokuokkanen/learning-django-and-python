@@ -1,27 +1,31 @@
 from .base import FunctionalTest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver import ActionChains
+from channels.testing import ChannelsLiveServerTestCase
+from selenium.webdriver.support.wait import WebDriverWait
 import time
 
 class NewVisitorTest(FunctionalTest):
 
-    def test_can_start_a_list_and_retrieve_it_later(self):
+    def create_initial_list(self, item_text):
         self.browser.get(self.live_server_url)
-
-        self.assertIn('To-Do', self.browser.title)
-        header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('To-Do', header_text)
-
-        # She is invited to enter a todo straight away
         inputbox = self.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Enter a to-do item'
         )
-
-        inputbox.send_keys('Buy peacock feathers')
-
+        inputbox.send_keys(item_text)
         inputbox.send_keys(Keys.ENTER)
+
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        self.browser.get(self.live_server_url)
+        self.assertIn('To-Do', self.browser.title)
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('To-Do', header_text)
+
+        # She is invited to enter a todo straight away
+        self.create_initial_list("Buy peacock feathers")
 
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
@@ -34,10 +38,7 @@ class NewVisitorTest(FunctionalTest):
 
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # Edith starts a new to-do list
-        self.browser.get(self.live_server_url)
-        inputbox = self.get_item_input_box()
-        inputbox.send_keys('Buy peacock feathers')
-        inputbox.send_keys(Keys.ENTER)
+        self.create_initial_list("Buy peacock feathers")
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
         # she notices her list has a unique URL
@@ -71,3 +72,30 @@ class NewVisitorTest(FunctionalTest):
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
+
+
+class ReflexTest(ChannelsLiveServerTestCase):
+    serve_static = True  # emulate StaticLiveServerTestCase
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        try:
+            # NOTE: Requires "chromedriver" binary to be installed in $PATH
+            cls.driver = webdriver.Chrome()
+        except:
+            super().tearDownClass()
+            raise
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+        super().tearDownClass()
+
+    def test_complete_reflex(self):
+        self.create_initial_list('hello')
+        element = self.browser.find_element_by_id('item-1')
+        ActionChains(self.browser).click(element).perform()
+        WebDriverWait(self.driver, 2).until(lambda _:
+            'line-through' in element.get_attribute('class').split(),
+            'Reflex was not executed')
