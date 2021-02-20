@@ -73,29 +73,3 @@ class NewVisitorTest(FunctionalTest):
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
 
-
-class ReflexTest(ChannelsLiveServerTestCase):
-    serve_static = True  # emulate StaticLiveServerTestCase
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        try:
-            # NOTE: Requires "chromedriver" binary to be installed in $PATH
-            cls.driver = webdriver.Chrome()
-        except:
-            super().tearDownClass()
-            raise
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
-
-    def test_complete_reflex(self):
-        self.create_initial_list('hello')
-        element = self.browser.find_element_by_id('item-1')
-        ActionChains(self.browser).click(element).perform()
-        WebDriverWait(self.driver, 2).until(lambda _:
-            'line-through' in element.get_attribute('class').split(),
-            'Reflex was not executed')
