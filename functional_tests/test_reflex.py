@@ -55,5 +55,14 @@ class ReflexTest(ChannelsLiveServerTestCase):
         with self.assertRaises(NoSuchElementException):
             self.driver.find_element_by_id('item-1')
 
+    def test_edit_reflex(self):
+        self._enter_ws_sockpuppet()
+        self.create_initial_list('hello')
+        time.sleep(1)
+        element = self.driver.find_element_by_id('edit-item-1')
+        ActionChains(self.driver).click(element).perform()
+        time.sleep(1)
+        self.driver.find_element_by_id('input-item-1')
+
     def _enter_ws_sockpuppet(self):
         self.driver.get(self.live_server_url + '/ws/sockpuppet')

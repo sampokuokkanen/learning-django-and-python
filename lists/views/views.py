@@ -20,10 +20,10 @@ class HomePage(TemplateView):
 
 class ShowDetailView(DetailView):
     model = List
-    template_name = 'lists/list_detail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['editable_items'] = self.request.session.get('editable_items') or []
         context['form'] = ExistingListItemForm(for_list=self.object)
         return context
 
