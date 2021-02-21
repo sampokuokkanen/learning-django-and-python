@@ -40,7 +40,8 @@ class ReflexTest(ChannelsLiveServerTestCase):
         self.create_initial_list('hello')
         time.sleep(1)
         element = self.driver.find_element_by_id('item-1')
-        ActionChains(self.driver).click(element).perform()
+        complete_button = self.driver.find_element_by_id('complete-item-1')
+        ActionChains(self.driver).click(complete_button).perform()
         WebDriverWait(self.driver, 3).until(lambda _:
             'line-through' in element.get_attribute('class').split(),
             'Complete Reflex was not executed')
