@@ -6,7 +6,7 @@ After=network.target
 User=sam
 Group=sam
 WorkingDirectory=/home/sam/sites/DOMAIN
-ExecStart=/home/sam/sites/DOMAIN/virtualenv/bin/python /home/sam/sites/DOMAIN/manage.py runworker --threads 4
+ExecStart=/home/sam/sites/DOMAIN/virtualenv/bin/python /home/sam/sites/DOMAIN/manage.py runworker sockpuppet-sync
 Restart=always
 
 [Install]
