@@ -8,6 +8,6 @@ User=sam
 WorkingDirectory=/home/sam/sites/DOMAIN
 EnvironmentFile=/home/sam/sites/DOMAIN/.env
 
-ExecStart=/home/sam/sites/DOMAIN/virtualenv/bin/daphne -b 0.0.0.0 -p 9001 superlists.asgi:application
+ExecStart=/home/sam/sites/DOMAIN/virtualenv/bin/daphne -u /tmp/daphne.sock superlists.asgi:application
 [Install]
 WantedBy=multi-user.target
