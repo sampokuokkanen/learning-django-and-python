@@ -1,4 +1,5 @@
 # learning-django-and-python
 Learning Django and Python
 
-Also going to be running this as a service!
+Using Django Sockpuppet to do some cool stuff. 
+Work in progress?!
