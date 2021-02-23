@@ -20,10 +20,20 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
+        'sockpuppet': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
     },
     'root': {
         'handlers': ['console'],
         'level': 'INFO',
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
     },
     'daphne': {
         'handlers': [
@@ -31,6 +41,12 @@ LOGGING = {
         ],
         'level': 'DEBUG'
     },
+    'loggers': {
+        'sockpuppet': {
+            'level': 'DEBUG',
+            'handlers': ['sockpuppet']
+        }
+    }
 }
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
