@@ -1,7 +1,7 @@
 import random
 from fabric.contrib.files import append, exists
 from fabric.api import cd, env, local, run
-
+# OLD KEY - NOT IN USE - REPLACE
 SENDGRID_API_KEY = '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'
 
 REPO_URL = 'git@github.com:sampokuokkanen/learning-django-and-python.git'
